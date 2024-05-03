@@ -14,4 +14,19 @@ addBookToLibrary("Harry Potter", "J.K. Rowling", 360);
 addBookToLibrary("Harry Potter", "J.K. Rowling", 360);
 addBookToLibrary("Harry Potter", "J.K. Rowling", 360);
 
-console.log(myLibrary);
+const libraryDiv = document.querySelector(".library");
+
+for (const book of myLibrary) {
+  const card = document.createElement("div");
+  card.classList.add("book");
+  const titleEl = document.createElement("h2");
+  titleEl.textContent = book.title;
+  const authorEl = document.createElement("p");
+  authorEl.textContent = book.author;
+  const pagesEl = document.createElement("p");
+  pagesEl.textContent = book.pages;
+  card.appendChild(titleEl);
+  card.appendChild(authorEl);
+  card.appendChild(pagesEl);
+  libraryDiv.appendChild(card);
+}
