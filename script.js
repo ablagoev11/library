@@ -1,6 +1,7 @@
 const myLibrary = [];
-function Book(id, title, author, pages) {
-  this.id = id;
+let currentId = 0;
+function Book(title, author, pages) {
+  this.id = currentId++;
   this.title = title;
   this.author = author;
   this.pages = pages;
@@ -8,7 +9,7 @@ function Book(id, title, author, pages) {
 }
 
 function addBookToLibrary(title, author, pages) {
-  const newBook = new Book(myLibrary.length, title, author, pages);
+  const newBook = new Book(title, author, pages);
   myLibrary.push(newBook);
 }
 
@@ -54,10 +55,30 @@ function addBookToPage() {
     pagesEl.textContent = book.pages;
     const isReadEl = document.createElement("p");
     isReadEl.textContent = book.isRead ? "Book is read" : "Book is not read";
+    const isReadButton = document.createElement("button");
+    isReadButton.textContent = "Read book";
+    const removeBookButton = document.createElement("button");
+    removeBookButton.textContent = "Remove book";
+
+    isReadButton.addEventListener("click", () => {
+      book.isRead = true;
+      addBookToPage();
+    });
+
+    removeBookButton.addEventListener("click", () => {
+      const index = findBook(book.id);
+      if (index > -1) myLibrary.splice(index, 1);
+
+      addBookToPage();
+    });
+
     card.appendChild(titleEl);
     card.appendChild(authorEl);
     card.appendChild(pagesEl);
     card.appendChild(isReadEl);
+    card.appendChild(isReadButton);
+    card.appendChild(removeBookButton);
+
     card.append;
     libraryDiv.appendChild(card);
   }
@@ -67,4 +88,11 @@ function killChildren(node) {
   while (node.firstChild) {
     node.removeChild(node.lastChild);
   }
+}
+
+function findBook(id) {
+  for (const [i, book] of myLibrary.entries()) {
+    if (book.id === id) return i;
+  }
+  return -1;
 }
