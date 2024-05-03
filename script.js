@@ -6,8 +6,10 @@ const authorField = modal.querySelector("#author");
 const pagesField = modal.querySelector("#pages");
 const libraryDiv = document.querySelector(".library");
 
+let currentId = 0;
 const myLibrary = [];
 function Book(title, author, pages) {
+  this.id = currentId++;
   this.title = title;
   this.author = author;
   this.pages = pages;
@@ -49,6 +51,9 @@ function addBookToPage(book) {
   });
 
   removeBookButton.addEventListener("click", () => {
+    const index = findBook(book.id);
+    if (index > -1) myLibrary.splice(index, 1);
+    console.log(myLibrary);
     libraryDiv.removeChild(card);
   });
 
@@ -61,6 +66,13 @@ function addBookToPage(book) {
 
   card.append;
   libraryDiv.appendChild(card);
+}
+
+function findBook(id) {
+  for (const [i, book] of myLibrary.entries()) {
+    if (book.id === id) return i;
+  }
+  return -1;
 }
 
 openModal.addEventListener("click", () => {
